@@ -34,45 +34,70 @@ public class Program {
 //			DB.closeStatement(st);
 //			DB.closeConnection();
 //		}
-		SimpleDateFormat sdf= new SimpleDateFormat("dd/mm/yyy");
+//		SimpleDateFormat sdf= new SimpleDateFormat("dd/mm/yyy");
+//		Connection conn = null;
+//		PreparedStatement st = null;
+//		try {
+//			conn = DB.getConnection();
+//			st = conn.prepareStatement(
+//					"INSERT INTO seller"
+//					+"(Name, Email, BirthDate, BaseSalary, DepartmentId)"
+//					+"VALUES"
+//					+"(?,?,?,?,?)",
+//					Statement.RETURN_GENERATED_KEYS
+//					);
+//			
+//			st.setString(1, "xcarl purple");
+//			st.setString(2, "ddandre1010@gmail.com");
+//			st.setDate(3, new java.sql.Date(sdf.parse("22/04/1995").getTime()));
+//			st.setDouble(4, 3000.00);	
+//			st.setInt(5, 4);
+//			int rowsAffected = st.executeUpdate();
+//			
+//			if (rowsAffected>0) {
+//				ResultSet rs = st.getGeneratedKeys();
+//				while (rs.next()) {
+//					int id = rs.getInt(1);
+//					System.out.println("Done!! Id = " +id);
+//					
+//				}
+//			} else {
+//                 System.out.println("nenhuma linha alterada");
+//			}
+//		} catch (SQLException e){
+//			e.printStackTrace();
+//		}catch (ParseException e) {
+//			e.printStackTrace();
+//		}finally {
+//			DB.closeStatement(st);
+//			DB.closeConnection();
+//		}
+		
 		Connection conn = null;
 		PreparedStatement st = null;
+		
 		try {
 			conn = DB.getConnection();
+			
 			st = conn.prepareStatement(
-					"INSERT INTO seller"
-					+"(Name, Email, BirthDate, BaseSalary, DepartmentId)"
-					+"VALUES"
-					+"(?,?,?,?,?)",
-					Statement.RETURN_GENERATED_KEYS
+					"UPDATE seller "
+					+"SET BaseSalary = BaseSalary + ?"
+					+ "WHERE "
+					+"(DepartmentId = ?)"
 					);
 			
-			st.setString(1, "xcarl purple");
-			st.setString(2, "ddandre1010@gmail.com");
-			st.setDate(3, new java.sql.Date(sdf.parse("22/04/1995").getTime()));
-			st.setDouble(4, 3000.00);	
-			st.setInt(5, 4);
-			int rowsAffected = st.executeUpdate();
-			
-			if (rowsAffected>0) {
-				ResultSet rs = st.getGeneratedKeys();
-				while (rs.next()) {
-					int id = rs.getInt(1);
-					System.out.println("Done!! Id = " +id);
+			st.setDouble(1, 200.0);
+			st.setInt(2, 2);
+			int rowsaffected = st.executeUpdate();
+			System.out.println("Done!! rows affected " +rowsaffected);
 					
-				}
-			} else {
-                 System.out.println("nenhuma linha alterada");
-			}
-		} catch (SQLException e){
-			e.printStackTrace();
-		}catch (ParseException e) {
+					
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			DB.closeStatement(st);
 			DB.closeConnection();
 		}
-		
 			
 		
 		
