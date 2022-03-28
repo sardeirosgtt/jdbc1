@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import db.DB;
+import db.DbIntegrityException;
 
 public class Program {
 
@@ -34,6 +35,9 @@ public class Program {
 //			DB.closeStatement(st);
 //			DB.closeConnection();
 //		}
+		
+		
+		
 //		SimpleDateFormat sdf= new SimpleDateFormat("dd/mm/yyy");
 //		Connection conn = null;
 //		PreparedStatement st = null;
@@ -73,6 +77,38 @@ public class Program {
 //			DB.closeConnection();
 //		}
 		
+		
+		
+		
+		
+//		Connection conn = null;
+//		PreparedStatement st = null;
+//		
+//		try {
+//			conn = DB.getConnection();
+//			
+//			st = conn.prepareStatement(
+//					"UPDATE seller "
+//					+"SET BaseSalary = BaseSalary + ?"
+//					+ "WHERE "
+//					+"(DepartmentId = ?)"
+//					);
+//			
+//			st.setDouble(1, 200.0);
+//			st.setInt(2, 2);
+//			int rowsaffected = st.executeUpdate();
+//			System.out.println("Done!! rows affected " +rowsaffected);
+//					
+//					
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			DB.closeStatement(st);
+//			DB.closeConnection();
+//		}
+			
+		
+		
 		Connection conn = null;
 		PreparedStatement st = null;
 		
@@ -80,25 +116,26 @@ public class Program {
 			conn = DB.getConnection();
 			
 			st = conn.prepareStatement(
-					"UPDATE seller "
-					+"SET BaseSalary = BaseSalary + ?"
-					+ "WHERE "
-					+"(DepartmentId = ?)"
+					"DELETE FROM department "
+					+"WHERE "
+					+"Id = ? "
 					);
 			
-			st.setDouble(1, 200.0);
-			st.setInt(2, 2);
+			st.setInt(1, 2);
+			
+			
+			
 			int rowsaffected = st.executeUpdate();
 			System.out.println("Done!! rows affected " +rowsaffected);
 					
 					
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DbIntegrityException(e.getMessage());
 		}finally {
 			DB.closeStatement(st);
 			DB.closeConnection();
 		}
-			
+		
 		
 		
 		
